@@ -1,0 +1,8 @@
+{
+  "dependencies" : [ {
+    "name" : "gtest",
+    "version>=" : "1.15.0"
+  } ],
+  "version": "0.1.0",
+  "name": "cpp-cookbook-test"
+}
