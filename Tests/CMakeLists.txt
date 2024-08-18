@@ -6,6 +6,7 @@ set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
 add_executable(CppCookbookTests
         ConceptsTest.cpp
+        CoroutinesTest.cpp
 )
 
 enable_testing()
