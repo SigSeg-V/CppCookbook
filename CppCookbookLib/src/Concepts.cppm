@@ -6,6 +6,7 @@
 #include <type_traits>
 #include <concepts>
 
+
 export module Concepts;
 
 #pragma region Add function
@@ -110,10 +111,10 @@ private:
 
 #pragma endregion "Optional class"
 
-export namespace Concepts
+namespace Concepts
 {
     // Type-safe Add function for cpp20 using concepts
-    template<typename ...TArgs>
+    export template<typename ...TArgs>
     requires CSameTypeAdd<TArgs...>
     auto Add(const TArgs& ...Args) noexcept
     {
@@ -121,7 +122,7 @@ export namespace Concepts
     }
 
     // Implementation of the Optional type using cpp20 concepts
-    template<typename T>
+    export template<typename T>
     class Optional
     {
     public:

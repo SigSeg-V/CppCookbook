@@ -3,8 +3,9 @@
 //
 #include <coroutine>
 #include <future>
-
 export module Coroutines;
+
+import Utils;
 
 /// Fulfilling the promise type API to use it in IntGenerator
 template<typename T, typename G>
@@ -87,9 +88,10 @@ namespace CoroIterator
     };
 }
 
-struct IntGenerator
+template<typename T>
+struct Generator
 {
-    using promise_type = PromiseTypeBase<int, IntGenerator>; // the promise type
+    using promise_type = PromiseTypeBase<T, Generator>; // the promise type
     using PromiseTypeHnd = std::coroutine_handle<promise_type>;
 
     // making the generator iterable
@@ -101,10 +103,10 @@ struct IntGenerator
     Iterator end() { return {}; }
 
     // ctor and dtors
-    IntGenerator(PromiseTypeHnd const&) = delete;
+    Generator(PromiseTypeHnd const&) = delete;
     // std::exchange sets old value to new value, then returns old value
-    IntGenerator(IntGenerator&& rhs) : CoroHnd(std::exchange(rhs.CoroHnd, nullptr)) {}
-    ~IntGenerator()
+    Generator(Generator&& rhs) : CoroHnd(std::exchange(rhs.CoroHnd, nullptr)) {}
+    ~Generator()
     {
         if (CoroHnd)
         {
@@ -113,7 +115,7 @@ struct IntGenerator
     }
 
 private:
-    explicit IntGenerator(promise_type* p) : CoroHnd{PromiseTypeHnd::from_promise(*p)} {}
+    explicit Generator(promise_type* p) : CoroHnd{PromiseTypeHnd::from_promise(*p)} {}
 
     friend promise_type;
     PromiseTypeHnd CoroHnd;
@@ -121,9 +123,8 @@ private:
 
 export namespace Coroutines
 {
-
     // Basic example to generate a range of values [start, end)
-    IntGenerator Counter(int start, int end)
+    Generator<i32> Counter(i32 start, i32 end)
     {
         while (start < end)
         {

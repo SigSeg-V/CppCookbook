@@ -7,6 +7,7 @@ set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 add_library(CppCookbookLib
         src/Concepts.cppm
         src/Coroutines.cppm
+        src/Utils.cppm
 )
 
 target_sources(CppCookbookLib
@@ -14,6 +15,7 @@ target_sources(CppCookbookLib
         FILE_SET cxx_modules TYPE CXX_MODULES FILES
         src/Concepts.cppm
         src/Coroutines.cppm
+        src/Utils.cppm
 )
 
 install(TARGETS CppCookbookLib
